@@ -2,6 +2,8 @@ package com.clinicaapi.app.service;
 
 import com.clinicaapi.app.dto.PacienteDTO;
 import com.clinicaapi.app.entity.Paciente;
+import com.clinicaapi.app.exception.BusinessException;
+import com.clinicaapi.app.exception.ResourceNotFoundException;
 import com.clinicaapi.app.repository.PacienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class PacienteService {
 
     public PacienteDTO cadastrar(PacienteDTO dto){
         if (pacienteRepository.existsByCpf(dto.getCpf())){
-            throw new RuntimeException("CPF ja cadastrado!");
+            throw new BusinessException("CPF ja cadastrado!");
         }
 
         Paciente novoPaciente = new Paciente();
@@ -48,12 +50,12 @@ public class PacienteService {
 
     public PacienteDTO buscarPorId(Long id){
         return converterParaDTO(pacienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Paciente nao encontrado!")));
+                .orElseThrow(() -> new ResourceNotFoundException("Paciente nao encontrado!")));
     }
 
     public PacienteDTO atualizar(Long id, PacienteDTO dto){
         Paciente pacienteAtualizado = pacienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Paciente nao encontrado!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Paciente nao encontrado!"));
 
         pacienteAtualizado.setNome(dto.getNome());
         pacienteAtualizado.setCpf(dto.getCpf());
@@ -66,7 +68,7 @@ public class PacienteService {
 
     public void deletar(Long id){
         if (!pacienteRepository.existsById(id)){
-            throw new RuntimeException("Paciente nao encontrado!");
+            throw new ResourceNotFoundException("Paciente nao encontrado!");
         }
 
         pacienteRepository.deleteById(id);
