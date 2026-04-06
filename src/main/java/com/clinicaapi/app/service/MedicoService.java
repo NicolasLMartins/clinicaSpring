@@ -55,7 +55,6 @@ public class MedicoService {
         Medico medicoAtualizado = medicoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Medico nao encontrado!"));
 
-        medicoAtualizado.setCrm(dto.getCrm());
         medicoAtualizado.setNome(dto.getNome());
         medicoAtualizado.setTelefone(dto.getTelefone());
         medicoAtualizado.setEmail(dto.getEmail());

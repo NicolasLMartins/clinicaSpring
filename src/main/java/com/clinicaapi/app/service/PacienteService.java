@@ -58,7 +58,6 @@ public class PacienteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente nao encontrado!"));
 
         pacienteAtualizado.setNome(dto.getNome());
-        pacienteAtualizado.setCpf(dto.getCpf());
         pacienteAtualizado.setTelefone(dto.getTelefone());
         pacienteAtualizado.setEmail(dto.getEmail());
         pacienteAtualizado.setDataNascimento(dto.getDataNascimento());
